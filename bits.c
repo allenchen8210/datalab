@@ -109,9 +109,12 @@ NOTES:
  *   Max ops: 10
  *   Rating: 4
  */
+
+#include <stdio.h>
 int absVal(int x)
 {
-    return 42;
+    int y = x >> 31;  // get signed bit   if x > 0 ,y = 0, else x < 0 , y = -1.
+    return (y ^ x) + (~y + 1);
 }
 
 /*
@@ -124,7 +127,10 @@ int absVal(int x)
  */
 int addOK(int x, int y)
 {
-    return 42;
+    int ans_sig = !!((x + y) >> 31);
+    int x_sig = !!(x >> 31);
+    int y_sig = !!(y >> 31);
+    return ((!x_sig & !ans_sig) | (y_sig & ans_sig) | (x_sig & !y_sig));
 }
 
 /*
@@ -137,7 +143,7 @@ int addOK(int x, int y)
  */
 int allEvenBits(int x)
 {
-    return 42;
+    return !((x | 0xAAAAAAAA) + 1);
 }
 
 /*
@@ -150,7 +156,7 @@ int allEvenBits(int x)
  */
 int allOddBits(int x)
 {
-    return 42;
+    return !((x | 0x55555555) + 1);
 }
 
 /*
@@ -163,7 +169,7 @@ int allOddBits(int x)
  */
 int anyEvenBit(int x)
 {
-    return 42;
+    return !!(x & 0x55555555);
 }
 
 /*
@@ -176,7 +182,7 @@ int anyEvenBit(int x)
  */
 int anyOddBit(int x)
 {
-    return 42;
+    return !!(x & 0xAAAAAAAA);
 }
 
 /*
