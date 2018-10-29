@@ -308,7 +308,7 @@ int bitReverse(int x)
  */
 int bitXor(int x, int y)
 {
-    return 42;
+    return (~(~x & ~y) & (~(x & y)));
 }
 
 /*
@@ -360,7 +360,7 @@ int countLeadingZero(int x)
  */
 int copyLSB(int x)
 {
-    return 42;
+    return x << 31 >> 31;
 }
 
 /*
@@ -372,7 +372,10 @@ int copyLSB(int x)
  */
 int distinctNegation(int x)
 {
-    return 42;
+    int x_ops = ~x + 1;
+    x = x_ops | x;
+    x = x << 1;
+    return !!x;
 }
 
 /*
@@ -396,7 +399,7 @@ int dividePower2(int x, int n)
  */
 int evenBits(void)
 {
-    return 42;
+    return 0x55555555;
 }
 
 /*
@@ -982,7 +985,7 @@ int multFiveEighths(int x)
  */
 int negate(int x)
 {
-    return 42;
+    return ~x + 1;
 }
 
 /*
@@ -993,7 +996,7 @@ int negate(int x)
  */
 int oddBits(void)
 {
-    return 42;
+    return 0xAAAAAAAA;
 }
 
 /*
@@ -1153,7 +1156,7 @@ int subtractionOK(int x, int y)
  */
 int thirdBits(void)
 {
-    return 42;
+    return 0x49249249;
 }
 
 /*
@@ -1164,7 +1167,7 @@ int thirdBits(void)
  */
 int tmax(void)
 {
-    return 42;
+    return 0x7FFFFFFF;
 }
 
 /*
@@ -1175,7 +1178,7 @@ int tmax(void)
  */
 int tmin(void)
 {
-    return 42;
+    return 0x80000000;
 }
 
 /*
