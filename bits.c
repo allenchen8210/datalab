@@ -194,7 +194,8 @@ int anyOddBit(int x)
  */
 int bang(int x)
 {
-    return 42;
+    int or_sum = x | (~x + 1);
+    return 0x1 ^ (0x1 & (or_sum >> 31));
 }
 
 /*
@@ -206,7 +207,7 @@ int bang(int x)
  */
 int bitAnd(int x, int y)
 {
-    return 42;
+    return ~(~x | ~y);
 }
 
 /*
@@ -244,9 +245,9 @@ int bitMask(int highbit, int lowbit)
  *   Max ops: 14
  *   Rating: 1
  */
-int bitMatch(int x, int y)
+int bitMatch(int x, int y)  // like NXOR
 {
-    return 42;
+    return ~(~(~x & ~y) & (~(x & y)));
 }
 
 /*
@@ -258,7 +259,7 @@ int bitMatch(int x, int y)
  */
 int bitNor(int x, int y)
 {
-    return 42;
+    return (~x & ~y);
 }
 
 /*
@@ -270,7 +271,7 @@ int bitNor(int x, int y)
  */
 int bitOr(int x, int y)
 {
-    return 42;
+    return ~(~x & ~y);
 }
 
 /*
