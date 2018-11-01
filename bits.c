@@ -631,7 +631,7 @@ unsigned floatUnsigned2Float(unsigned u)
  */
 int getByte(int x, int n)
 {
-    return 42;
+    return (x >> (n << 3)) & 0xff;
 }
 
 /*
@@ -644,7 +644,15 @@ int getByte(int x, int n)
  */
 int greatestBitPos(int x)
 {
-    return 42;
+    unsigned int m;
+    m = x;
+    m = m | m >> 1;
+    m = m | m >> 2;
+    m = m | m >> 4;
+    m = m | m >> 8;
+    m = m | m >> 16;
+    m = m & ((~m >> 1) ^ 0x80000000);
+    return m;
 }
 
 /* howManyBits - return the minimum number of bits required to represent x in
@@ -675,7 +683,7 @@ int howManyBits(int x)
  */
 int implication(int x, int y)
 {
-    return 42;
+    return (!x) | y;
 }
 
 /*
@@ -714,7 +722,7 @@ int isAsciiDigit(int x)
  */
 int isEqual(int x, int y)
 {
-    return 42;
+    return !(~(~x & ~y) & (~(x & y)));
 }
 
 /*
@@ -726,7 +734,11 @@ int isEqual(int x, int y)
  */
 int isGreater(int x, int y)
 {
-    return 42;
+    int sub_sign = !!((x + ~y) >> 31);
+    int x_sign = !!(x >> 31);
+    int y_sign = !!(y >> 31);
+    return ((!x_sign) & (!sub_sign)) | ((!x_sign) & y_sign) |
+           (x_sign & y_sign & (!sub_sign));
 }
 
 /*
@@ -738,7 +750,11 @@ int isGreater(int x, int y)
  */
 int isLess(int x, int y)
 {
-    return 42;
+    int sub_sign = !!((~x + y) >> 31);
+    int x_sign = !!(x >> 31);
+    int y_sign = !!(y >> 31);
+    return ((!y_sign) & (!sub_sign)) | ((!y_sign) & x_sign) |
+           (y_sign & x_sign & (!sub_sign));
 }
 
 /*
@@ -750,6 +766,11 @@ int isLess(int x, int y)
  */
 int isLessOrEqual(int x, int y)
 {
+    int sub_sign = !!(((~x + 1) + y) >> 31);
+    int x_sign = !!(x >> 31);
+    int y_sign = !!(y >> 31);
+    return ((!y_sign) & (!sub_sign)) | ((!y_sign) & x_sign) |
+           (y_sign & x_sign & (!sub_sign));
     return 42;
 }
 
@@ -762,7 +783,7 @@ int isLessOrEqual(int x, int y)
  */
 int isNegative(int x)
 {
-    return 42;
+    return !!(x >> 31);
 }
 
 /*
@@ -774,7 +795,7 @@ int isNegative(int x)
  */
 int isNonNegative(int x)
 {
-    return 42;
+    return !(x >> 31);
 }
 
 /*
@@ -787,7 +808,7 @@ int isNonNegative(int x)
  */
 int isNonZero(int x)
 {
-    return 42;
+    return !!x;
 }
 
 /*
@@ -799,7 +820,7 @@ int isNonZero(int x)
  */
 int isNotEqual(int x, int y)
 {
-    return 42;
+    return !!(~(~x & ~y) & (~(x & y)));
 }
 
 /*
@@ -823,7 +844,7 @@ int isPallindrome(int x)
  */
 int isPositive(int x)
 {
-    return 42;
+    return !(x >> 31);
 }
 
 /*
@@ -848,7 +869,7 @@ int isPower2(int x)
  */
 int isTmax(int x)
 {
-    return 42;
+    return (!(x + 0x80000001)) & (!(x >> 31));
 }
 
 /*
@@ -860,7 +881,7 @@ int isTmax(int x)
  */
 int isTmin(int x)
 {
-    return 42;
+    return (!(x + 0x80000000)) & (x >> 31);
 }
 
 /*
@@ -872,7 +893,7 @@ int isTmin(int x)
  */
 int isZero(int x)
 {
-    return 42;
+    return !x;
 }
 
 /*
@@ -957,7 +978,7 @@ int minimumOfTwo(int x, int y)
  */
 int minusOne(void)
 {
-    return 42;
+    return 0xffffffff;
 }
 
 /*
